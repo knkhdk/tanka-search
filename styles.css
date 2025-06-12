@@ -114,4 +114,14 @@ th {
 
 tr:hover {
     background-color: #f5f5f5;
+}
+
+#resultsTable td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 単価の列を右詰めにする */
+#resultsTable td:nth-child(2) {
+    text-align: right;
 } 
