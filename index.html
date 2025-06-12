@@ -10,20 +10,13 @@
 <body>
     <div class="container">
         <h1>単価検索システム</h1>
-        <div class="search-container">
-            <div class="file-input">
-                <label for="excelFile" class="file-label">
-                    Excelファイルを選択
-                    <input type="file" id="excelFile" accept=".xlsx, .xls" />
-                </label>
-                <span id="fileName">ファイルが選択されていません</span>
-            </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="検索したい単語を入力してください">
-                <button onclick="searchWord()">検索</button>
-            </div>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="検索したい単語を入力">
+            <button onclick="searchWord()">検索</button>
         </div>
-        <div id="results" class="results-container">
+
+        <div class="results">
             <table id="resultsTable">
                 <thead>
                     <tr>

@@ -7,30 +7,26 @@ function formatNumber(num) {
     return Number(num).toLocaleString('ja-JP');
 }
 
-// ファイル選択時の処理
-document.getElementById('excelFile').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // ファイル名を表示
-    document.getElementById('fileName').textContent = file.name;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        workbook = XLSX.read(data, { type: 'array' });
-        worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        
-        // デバッグ用：読み込んだデータの内容を確認
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        console.log('読み込んだデータ:', jsonData);
-        console.log('列名:', Object.keys(jsonData[0] || {}));
-        
-        // ファイルが読み込まれたことを通知
-        alert('Excelファイルが読み込まれました。検索を開始できます。\n列名: ' + Object.keys(jsonData[0] || {}).join(', '));
-    };
-
-    reader.readAsArrayBuffer(file);
+// ページ読み込み時に自動的にExcelファイルを読み込む
+window.addEventListener('load', function() {
+    fetch('tanka.xlsx')
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
+            worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            
+            // デバッグ用：読み込んだデータの内容を確認
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            console.log('読み込んだデータ:', jsonData);
+            console.log('列名:', Object.keys(jsonData[0] || {}));
+            
+            // ファイルが読み込まれたことを通知
+            alert('単価データを読み込みました。検索を開始できます。\n列名: ' + Object.keys(jsonData[0] || {}).join(', '));
+        })
+        .catch(error => {
+            console.error('Excelファイルの読み込みに失敗しました:', error);
+            alert('単価データの読み込みに失敗しました。tanka.xlsxファイルが正しい場所にあることを確認してください。');
+        });
 });
 
 // エンターキーでの検索実行を追加
@@ -46,7 +42,7 @@ function searchWord() {
     resultsBody.innerHTML = '';
 
     if (!worksheet) {
-        alert('先にExcelファイルをアップロードしてください。');
+        alert('単価データの読み込みに失敗しています。ページを更新してください。');
         return;
     }
 
