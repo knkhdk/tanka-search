@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単価検索システム</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>単価検索システム</h1>
+        <div class="search-container">
+            <div class="file-input">
+                <label for="excelFile" class="file-label">
+                    Excelファイルを選択
+                    <input type="file" id="excelFile" accept=".xlsx, .xls" />
+                </label>
+                <span id="fileName">ファイルが選択されていません</span>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="検索したい単語を入力してください">
+                <button onclick="searchWord()">検索</button>
+            </div>
+        </div>
+        <div id="results" class="results-container">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>商品名</th>
+                        <th>単価</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
